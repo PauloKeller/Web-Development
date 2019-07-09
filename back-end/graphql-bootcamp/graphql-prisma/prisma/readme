@@ -1,0 +1,3 @@
+# deploy env variant
+
+prisma deploy -e ../config/test.env
