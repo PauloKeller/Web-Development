@@ -1,0 +1,42 @@
+<html>
+  <meta charset="utf-8" />
+  <head>
+  </head>
+  <body>
+    <canvas id="c" width="500" height="500"></canvas>
+
+    <script>
+      var c = document.querySelector("#c");
+      var ctx = c.getContext("2d");
+
+      ctx.fillStyle = "blue";
+      // Start at (0,0) and draw a 50px x 50px blue rectangle.
+      ctx.fillRect(0,0,50,50);
+      // Start at (0,0) and clear a 25px x 25px rectangle.
+      ctx.clearRect(0,0,25,25);
+
+      ctx.fillRect(100, 100, 100, 100);
+
+      ctx.strokeRect(50, 50, 50, 50);
+
+      ctx.clearRect(0, 0, c.width, c.height);
+
+      ctx.beginPath();
+      ctx.moveTo(10, 10);
+      ctx.lineTo(50, 50);
+      ctx.lineTo(50, 10);
+      ctx.lineTo(10, 10);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.strokeRect(50, 50, 100, 100);
+      ctx.beginPath();
+      ctx.moveTo(75, 75);
+      ctx.lineTo(125, 125);
+      ctx.lineTo(125, 75);
+      ctx.fill();
+
+      
+    </script>
+  </body>
+</html>

@@ -1,0 +1,36 @@
+<html>
+  <meta charset="utf-8" />
+  <head>
+  </head>
+  <body>
+    <video id="v" controls loop src="HotRods.mp4"></video>
+    <canvas id="c"></canvas>
+    <script type="text/javascript">
+      var canvas = document.querySelector("canvas");
+      var ctx = canvas.getContext("2d");
+
+      document.addEventListener('DOMContentLoaded', function() {
+        var v = document.querySelector('#v');
+        var canvas = document.querySelector('#c');
+        var ctx = canvas.getContext('2d');
+
+        v.addEventListener('loadedmetadata', function() {
+          canvas.width = this.videoWidth;
+          canvas.height = this.videoHeight;
+        });
+
+        var draw = function() {
+          canvas.getContext('2d').drawImage(v, 0, 0);
+          requestAnimationFrame(draw);
+        }
+
+        v.addEventListener('play', function() {
+          if (v.paused || v.ended) return;
+            draw();
+        });
+      });
+
+
+    </script>
+  </body>
+</html>
