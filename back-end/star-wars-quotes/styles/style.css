@@ -1,0 +1,32 @@
+body {
+    max-width: 500px;
+    font-size: 19px;
+    margin: 0 auto;
+    background-image: url("https://images-na.ssl-images-amazon.com/images/G/01/Toys-and-Games/brandstores/Amazon_StarWars_1200x360.jpg");
+    background-size: 1080px;
+    background-repeat: no-repeat;
+    background-position-y: 330px;
+    background-position-x: center;
+}
+
+quotes {
+    display: table;
+    margin: 0 auto;
+    margin-top: 50px;
+}
+
+form {
+    margin: 15px;
+    margin-top: 50px; 
+}
+
+input {
+    text-align: center;
+    width: 150px;
+    height: 25px;
+}
+
+btn {
+    width: 80px;
+    height: 25px;
+}
