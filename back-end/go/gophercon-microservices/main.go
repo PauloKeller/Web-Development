@@ -26,7 +26,7 @@ func main() {
 
 	srv := NewServer(mux, GcukServiceAddr)
 
-	err := srv.ListenAndServe()
+	err := srv.ListenAndServeTLS()
 	if err != nil {
 		log.Fatalf("server failed to start: %v", err)
 	}
