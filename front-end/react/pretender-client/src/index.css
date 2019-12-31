@@ -1,0 +1,142 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #2d3436;
+}
+
+#privacy-policy {
+  background-color: #f5f6fa;
+}
+
+#main h1{
+  color: #444;
+  text-align: center;
+}
+
+#main {
+  padding: 0px;
+  box-sizing: border-box;
+  width: 60%;
+  height: 100%;
+}
+
+#facebook-button {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -50px;
+  margin-left: -100px;
+}
+
+#header {
+  padding: 0px;
+  margin: 0px;
+  left: 100px;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0px;
+}
+
+#header h1, h2{
+  color: #f5f6fa;
+  padding: 10px;
+  margin: 3px;
+}
+
+#posts-list {
+  padding: 0;
+}
+
+#post-container {
+  width: 600px;
+  height: 90px;
+  margin: 20px 12px 12px 50px;
+  padding: 10px;
+  border: 1px solid #f5f6fa;
+  text-align: center;
+  box-shadow: 1px 2px 3px rgba(0,0,0,0.3);
+  cursor: pointer;
+  color: #f5f6fa; 
+}
+
+
+form {
+  background: #2d3436;
+  padding: 20px;
+  position: fixed;
+  color: #f5f6fa;
+  left: 900px;
+  bottom: 0;
+  width: 400px;
+}
+
+form .field {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 10px;
+}
+
+form label {
+  text-align: right;
+  padding: 6px;
+}
+
+form select, form input {
+  margin: 4px;
+  padding: 6px;
+  box-sizing: border-box;
+}
+
+form button {
+  color: #2d3436;
+  font-size: 2em;
+  background: #f5f6fa;
+  border: 0;
+  padding: 0 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
+#post-details {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 40%;
+  height: 100%;
+  background: #f5f6fa;
+  padding: 30px;
+  overflow: auto;
+  box-shadow: -2px -3px -5px rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  color: #2d3436;
+}
+
+#buttons-container {
+  margin: 12px;
+}
+
+#lier-button {
+  color: #f5f6fa;
+  font-size: 2em;
+  background: red;
+  border: 0;
+  padding: 0 10px;
+  cursor: pointer;
+  margin: 12px;
+  width: 150px;
+}
+
+#truth-button {
+  color: #f5f6fa;
+  font-size: 2em;
+  background: green;
+  border: 0;
+  padding: 0 10px;
+  width: 150px;
+  cursor: pointer;
+  margin: 12px;
+}

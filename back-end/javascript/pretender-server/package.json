@@ -1,0 +1,35 @@
+{
+  "name": "pretender-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-type": "mocha schema/type/**/*.serverSpec.js",
+    "test-mutation": "mocha schema/mutation/**/*.serverSpec.js",
+    "test-query": "mocha schema/query/**/*.serverSpec.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.3",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
+    "mongoose": "^5.2.4",
+    "serve-favicon": "^2.5.0",
+    "winston": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-register": "^6.26.0",
+    "chai": "^4.1.2",
+    "lodash": "^4.17.10",
+    "mocha": "^5.2.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
+    "sinon": "^6.1.4",
+    "sinon-chai": "^3.2.0"
+  }
+}
