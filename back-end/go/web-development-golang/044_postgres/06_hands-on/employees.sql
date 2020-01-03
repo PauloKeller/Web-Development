@@ -1,0 +1,6 @@
+CREATE TABLE employees (
+  ID SERIAL PRIMARY KEY NOT NULL,
+  NAME           TEXT    NOT NULL,
+  SCORE          INT    DEFAULT 10 NOT NULL,
+  SALARY         REAL
+);
