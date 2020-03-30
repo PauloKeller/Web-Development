@@ -1,0 +1,13 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {
+            "name": "Paulo Keller"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "paths": {}
+}
