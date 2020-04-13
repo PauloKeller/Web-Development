@@ -16,8 +16,8 @@ sudo docker volume create usersmariadb
 
 ```
 
-sudo docker run -it -v usersmariadb:/volume -v $USERHOME/go/src/github.com/PacktPublishing/Hands-on-Microservices-with-Go/section-4/video-3/data/:/backup ubuntu \
-    sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/usersmariadb.tar.bz2"
+sudo docker run -it -v usersmariadb:/volume -v /home/paulo/Workspace/web-development/back-end/go/hands-on-microservices-with-go/04_security_and_authentication/03_authentication_tokens_and_jwt/data/:/backup ubuntu \
+sh -c "rm -rf /volume/* /volume/..?* /volume/.[!.]* ; tar -C /volume/ -xjf /backup/usersmariadb.tar.bz2"
 
 
 ```
