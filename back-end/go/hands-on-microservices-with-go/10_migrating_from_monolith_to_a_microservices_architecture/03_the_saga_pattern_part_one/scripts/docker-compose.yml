@@ -1,0 +1,77 @@
+version: '3.4'
+services:
+  videos-service:
+    build: ../videos-service/
+    image: "videos-service"
+    container_name: "videos-service"
+    ports:
+      - "8081:8081"
+    networks:
+      - s10v3-videos-network
+    depends_on:
+      - videos-mariadb
+
+  videos-mariadb:
+    image: "mariadb"
+    container_name: "videos-mariadb"
+    networks:
+      - s10v3-videos-network
+    volumes:
+      - mariadb-videos:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+
+  users-service:
+    build: ../users-service/
+    image: "users-service"
+    container_name: "users-service"
+    ports:
+      - "8082:8082"
+    networks:
+      - s10v3-users-network
+    depends_on:
+      - users-mariadb
+
+  users-mariadb:
+    image: "mariadb"
+    container_name: "users-mariadb"
+    networks:
+      - s10v3-users-network
+    volumes:
+      - mariadb-users:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+     
+  agents-service:
+    build: ../agents-service/
+    image: "agents-service"
+    container_name: "agents-service"
+    ports:
+      - "8083:8083"
+    networks:
+      - s10v3-agents-network
+    depends_on:
+      - agents-mariadb
+
+  agents-mariadb:
+    image: "mariadb"
+    container_name: "agents-mariadb"
+    networks:
+      - s10v3-agents-network
+    volumes:
+      - mariadb-agents:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD:root-password
+
+networks:
+  s10v3-videos-network:
+  s10v3-users-network:
+  s10v3-agents-network:
+
+volumes:
+  mariadb-users:
+    external: true
+  mariadb-agents:
+    external: true
+  mariadb-videos:
+    external: true
