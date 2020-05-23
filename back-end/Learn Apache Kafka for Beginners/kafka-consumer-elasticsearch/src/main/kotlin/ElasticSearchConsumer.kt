@@ -9,14 +9,17 @@ import org.apache.kafka.clients.consumer.ConsumerConfig
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.serialization.StringDeserializer
+import org.elasticsearch.action.bulk.BulkRequest
 import org.elasticsearch.action.index.IndexRequest
 import org.elasticsearch.client.RequestOptions
 import org.elasticsearch.client.RestClient
 import org.elasticsearch.client.RestHighLevelClient
 import org.elasticsearch.common.xcontent.XContentType
 import org.slf4j.LoggerFactory
+import java.lang.Exception
 import java.time.Duration
 import java.util.*
+import kotlin.math.log
 
 class ElasticSearchConsumer {
     fun createClient(): RestHighLevelClient {
@@ -51,6 +54,9 @@ class ElasticSearchConsumer {
         properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer::class.java.name)
         properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId)
         properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest")
+        properties.setProperty(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "false")
+        properties.setProperty(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, "100")
+
         val consumer = KafkaConsumer<String, String>(properties)
         consumer.subscribe(listOf(topic))
 
@@ -72,26 +78,41 @@ fun main() {
 
     while (true) {
         val records: ConsumerRecords<String, String> = consumer.poll(Duration.ofMillis(100)) //new in kafka 2.0.0
+        val recordCount = records.count()
+        logger.info("Received $recordCount records")
+
+        val bulkRequest = BulkRequest()
 
         for (record in records) {
             // 2 strategies
             // kafka generic ID
             // val kafkaGenericId = record.topic() + "_" + record.partition() + "_" + record.offset()
+            try {
+                // twitter feed specific id
+                // use the resource id
+                val id = elasticSearchConsumer.extractIdFromTweet(record.value())
 
-            // twitter feed specific id
-            // use the resource id
-            val id = elasticSearchConsumer.extractIdFromTweet(record.value())
+                // where we insert data into ElasticSearch
+                val indexRequest = IndexRequest(
+                    "twitter",
+                    "tweets",
+                    id // this is to make our consumer idempotent
+                ).source(record.value(), XContentType.JSON)
 
-            // where we insert data into ElasticSearch
-            val indexRequest = IndexRequest(
-                "twitter",
-                "tweets",
-                id
-            ).source(record.value(), XContentType.JSON)
+                bulkRequest.add(indexRequest) // we add to our bulk request (take no time)
+            } catch (e: Exception) {
+                logger.warn("skipping bad data: " + record.value())
+            }
 
-            val indexResponse = client.index(indexRequest, RequestOptions.DEFAULT)
-            logger.info(indexResponse.id)
-            Thread.sleep(1000) // introduce a small delay
+        }
+
+        if (recordCount > 0) {
+            val bulkResponse = client.bulk(bulkRequest, RequestOptions.DEFAULT)
+
+            logger.info("Committing offsets...")
+            consumer.commitSync()
+            logger.info("Offsets have been committed")
+            Thread.sleep(1000)
         }
     }
 

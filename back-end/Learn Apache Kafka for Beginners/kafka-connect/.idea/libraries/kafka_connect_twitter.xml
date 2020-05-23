@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="kafka-connect-twitter">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/freemarker-2.3.25-incubating.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/javassist-3.19.0-GA.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/kafka-connect-twitter-0.2.26.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/jackson-annotations-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/jackson-core-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/reflections-0.9.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/guava-18.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/connect-utils-0.3.105.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/jackson-databind-2.8.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/twitter4j-core-4.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/annotations-2.0.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/connectors/kafka-connect-twitter/twitter4j-stream-4.0.6.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
