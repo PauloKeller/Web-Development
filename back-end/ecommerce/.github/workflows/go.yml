@@ -1,0 +1,61 @@
+name: Go
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+
+    test-users-service:
+      name: Test users service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Get project dependencies
+        run: cd users-service/src/api/ && go mod download
+      
+      - name: Install package
+        run: cd users-service/src/api/ && go install users-service
+
+      - name: Run tests
+        run: cd users-service/src/api/ && CGO_ENABLED=0 go test ./...
+    
+    
+    
+    test-products-service:
+      name: Test products service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get project dependencies
+        run: cd products-service/src/api/ && go mod download
+
+      - name: Install package
+        run: cd products-service/src/api/ && go install products-service
+
+      - name: Run tests
+        run: cd products-service/src/api/ && CGO_ENABLED=0 go test ./...
+  
+  

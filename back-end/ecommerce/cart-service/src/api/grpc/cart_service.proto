@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package cart_grpc;
+
+message Cart {
+  string id = 1;
+  string user_id = 2;
+  repeated string itens = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message CreateCartRequest {
+  string user_id = 1;
+}
+
+service CartService {
+  rpc CreateCart (CreateCartRequest) returns (Cart) {}
+}

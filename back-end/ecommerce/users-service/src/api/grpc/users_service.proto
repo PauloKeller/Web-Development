@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package users_grpc;
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string username = 4;
+  string email = 5;
+  double balance = 6;
+  google.protobuf.Timestamp birthdate = 7;
+  google.protobuf.Timestamp created_at = 8;
+  google.protobuf.Timestamp updated_at = 9;
+}
+
+message GetUserByIdRequest {
+  string user_id = 1;
+}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string username = 3;
+  string email = 4;
+  google.protobuf.Timestamp birthdate = 5;
+}
+
+message CreateUserReply {
+  string last_id = 1;
+}
+
+service UserService {
+  rpc GetUserByID (GetUserByIdRequest) returns (User) {}
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply) {}
+}

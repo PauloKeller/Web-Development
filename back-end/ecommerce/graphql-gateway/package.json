@@ -1,0 +1,54 @@
+{
+  "name": "graphql-gateway",
+  "scripts": {
+    "start": "npm run prettier && npm run nodemon",
+    "nodemon": "dotenv -- nodemon -e ts,graphql -x ts-node src/index.ts",
+    "debug": "dotenv -- nodemon -e ts,graphql -x ts-node --inspect src/index.ts",
+    "build": "rimraf dist && tsc",
+    "prettier": "prettier --write .",
+    "test": "jest --runInBand"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "globals": {
+      "ts-jest": {
+        "babelConfig": false
+      }
+    },
+    "globalSetup": "./test/globalSetup.ts",
+    "globalTeardown": "./test/globalTeardown.ts"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "graphql-yoga": "1.18.3",
+    "jsonwebtoken": "8.5.1"
+  },
+  "devDependencies": {
+    "@babel/polyfill": "^7.8.7",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-typescript": "^7.9.0",
+    "@types/bcryptjs": "2.4.2",
+    "@types/jest": "^25.2.1",
+    "@types/node": "10.17.20",
+    "babel-register": "^6.26.0",
+    "dotenv-cli": "1.4.0",
+    "jest": "^25.4.0",
+    "jest-junit": "^10.0.0",
+    "nodemon": "1.19.4",
+    "prettier": "2.0.4",
+    "rimraf": "2.7.1",
+    "ts-jest": "^25.4.0",
+    "ts-node": "7.0.1",
+    "typescript": "^3.8.3"
+  }
+}

@@ -1,0 +1,130 @@
+version: '3'
+services:
+  # USERS SERVICE
+  users-service:
+    container_name: users-service
+    build:
+      context: ../users-service/src/api/
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - '50000:50000'
+    environment:
+      - PORT=${USERS_SERVICE_PORT}
+    volumes:
+      - users-service:/usr/src/app/
+    networks: 
+      - users-network
+    depends_on:
+      - users-cache-redis
+      - users-postgres
+  
+  users-cache-redis:
+    image: "redis"
+    container_name: "users-cache-redis"
+    networks:
+      - users-network
+
+  users-postgres:
+    image: postgres:latest
+    container_name: users-postgres
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    volumes:
+      - users-postgres:/var/lib/postgresql/data
+      - ./sql/users/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - users-network
+
+  # PRODUCTS SERVICE
+  products-service:
+    container_name: products-service
+    build:
+      context: ../products-service/src/api/
+      dockerfile: Dockerfile
+    restart: on-failure
+    ports:
+      - '8080:8080'
+    volumes:
+      - products-service:/usr/src/app/
+    networks: 
+      - products-network
+    depends_on:
+      - products-postgres
+
+  products-postgres:
+    image: postgres:latest
+    container_name: products-postgres
+    environment:
+      - POSTGRES_USER=${DB_USER_PRODUCTS}
+      - POSTGRES_PASSWORD=${DB_PASSWORD_PRODUCTS}
+      - POSTGRES_DB=${DB_NAME_PRODUCTS}
+    volumes:
+      - products-postgres:/var/lib/postgresql/data
+      - ./sql/products/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - products-network
+
+  # MONITORING AND TOOLS
+  cadvisor:
+    image: "google/cadvisor"
+    container_name: "cadvisor"
+    ports:
+      - "9091:8080"
+    networks:
+      - users-network
+      - products-network
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+  
+  node-exporter:
+    image: "prom/node-exporter"
+    container_name: "node_exporter"
+    ports:
+      - "9092:9100"
+    networks:
+      - users-network
+      - products-network
+
+  grafana:
+    image: "grafana/grafana"
+    container_name: "grafana"
+    ports:
+      - "9093:3000"
+    networks:
+      - users-network
+      - products-network
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+  
+  prometheus:
+    image: "prom/prometheus"
+    container_name: "prometheus"
+    ports:
+      - "9090:9090"
+    networks:
+      - users-network
+      - products-network
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    depends_on:
+      - users-service
+      - products-service
+      - cadvisor
+      - grafana
+
+networks:
+  users-network:
+  products-network:
+
+volumes:
+  users-service:
+  users-postgres:
+  products-service:
+  products-postgres:

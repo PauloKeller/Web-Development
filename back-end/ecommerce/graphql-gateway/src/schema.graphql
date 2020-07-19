@@ -1,0 +1,14 @@
+type Query {
+  me(id: ID!): User
+}
+
+type User {
+  id: ID!
+  username: String!
+  firstName: String!
+  lastName: String!
+  email: String!
+  birthdate: String
+  added: String
+  balance: Float!
+}
