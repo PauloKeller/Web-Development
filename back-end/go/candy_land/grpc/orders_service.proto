@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+import public "users_service.proto";
+
+package candyland.grpc;
+
+message Order {
+  string id = 1;
+  candyland.grpc.User user = 2;
+}
+
+message CreateOrderRequest {
+  string user_id = 1;
+  string product_id = 2;
+}
+
+message CreateOrderReply {
+  bool was_created = 1;
+}
+
+service OrdersService {
+  rpc CreateOrder (CreateOrderRequest) returns (CreateOrderReply);
+}

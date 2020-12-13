@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package candyland.grpc;
+
+enum Complements {
+  HOUSE = 0;
+  APARTMENT = 1;
+}
+
+message Address {
+  string id = 1;
+  string user_id = 2;
+  string country = 3;
+  string state = 4;
+  string city = 5;
+  string street = 6;
+  string number = 7;
+  Complements complement = 8;
+}
+
+message CreateAddressRequest {
+  string country_id = 1;
+  string user_id = 2;
+  string state_id = 3;
+  string city_id = 4;
+  string street_id = 5;
+  string number = 6;
+  Complements complement = 7;
+}
+
+message CreateAddressReply {
+  bool wasCreated = 1;
+}
+
+service AddressesService {
+  rpc CreateAddress (CreateAddressRequest) returns (CreateAddressReply);
+}

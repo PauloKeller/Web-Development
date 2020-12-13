@@ -1,0 +1,15 @@
+version: '3'
+services:
+  users-service:
+    container_name: users-service
+    build:
+      context: users_service/
+      dockerfile: Dockerfile
+    restart: on-failure
+    environment:
+      - PORT=5000
+    networks:
+      - users-network
+
+networks:
+  users-network:

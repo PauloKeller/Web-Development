@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package candyland.grpc;
+
+message Cart {
+  string id = 1;
+  string product_id = 2;
+  int32 quantity = 3;
+}
+
+message AddProductToCartRequest {
+  string cart_id = 1;
+  string product_id = 2;
+  int32 quantity = 3;
+}
+
+message AddProductToCartReply {
+  bool wasCreated = 1;
+}
+
+service CartsService {
+  rpc AddProductToCart (AddProductToCartRequest) returns (AddProductToCartReply);
+}

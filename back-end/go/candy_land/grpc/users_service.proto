@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package candyland.grpc;
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string username = 4;
+  string email = 5;
+}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string username = 3;
+  string email = 4;
+}
+
+message CreateUserReply {
+  bool wasCreated = 1;
+}
+
+service UsersService {
+  rpc CreateUser (CreateUserRequest) returns (CreateUserReply);
+}

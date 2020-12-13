@@ -1,0 +1,115 @@
+name: Go
+
+on:
+  pull_request:
+    branches: [ dev, master ]
+
+jobs:
+    test-users-service:
+      name: Test users service
+      env: 
+        project_name: users_service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Get project dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: cd $project_name/ && CGO_ENABLED=0 go test ./...
+
+    test-addresses-service:
+      name: Test addresses service
+      env: 
+        project_name: addresses_service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Get project dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: cd $project_name/ && CGO_ENABLED=0 go test ./...
+
+    test-carts-service:
+      name: Test carts service
+      env: 
+        project_name: carts_service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+    
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Get project dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: cd $project_name/ && CGO_ENABLED=0 go test ./...
+
+    test-orders-service:
+      name: Test orders service
+      env:
+        project_name: orders_service
+      strategy:
+        matrix:
+          go-version: [1.14.x]
+          platform: [ubuntu-latest]
+      runs-on: ${{ matrix.platform }}
+      steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Get project dependencies
+        run: go mod download
+
+      - name: Run tests
+        run: cd $project_name/ && CGO_ENABLED=0 go test ./...
+
+    sonarcloud:
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v2
+        with:
+          # Disabling shallow clone is recommended for improving relevancy of reporting
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
