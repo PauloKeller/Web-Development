@@ -1,0 +1,37 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+        
+    - name: Install protoc
+      run: sudo apt-get install -y protobuf-compiler && go install google.golang.org/protobuf/cmd/protoc-gen-go@latest && go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+      
+    - name: Export PATH
+      run: export PATH="$PATH:$(go env GOPATH)/bin"
+        
+    - name: Generate GPRC files
+      working-directory: ./hub_service/proto
+      run: protoc --go_out=. --go-grpc_out=require_unimplemented_servers=false:. *.proto
+        
+    - name: Build
+      working-directory: ./hub_service
+      run: go build
+      
+    - name: Test
+      working-directory: ./hub_service
+      run: go test ./... -coverprofile cover.out

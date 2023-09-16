@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "out/";
+
+package hub;
+
+message User {
+  string id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string username = 4;
+  string email = 5;
+  string password = 6;
+  google.protobuf.Timestamp created_at = 7;
+  google.protobuf.Timestamp updated_at = 8;
+  google.protobuf.Timestamp deleted_at = 9;
+}
+
+message CreateUserRequest {
+  string first_name = 1;
+  string last_name = 2;
+  string username = 3;
+  string email = 4;
+  string password = 5;
+}
+
+message CreateUserReply {
+  bool was_created = 1;
+}
+
+message RequestGetUserById {
+  string id = 1;
+}
+
+message Account {
+  string id = 1;
+  string number = 2;
+  string digit = 3;
+  User user = 4;
+}
+
+message CreateAccountRequest {
+  string number = 1;
+  string digit = 2;
+  User user = 3;
+}
+
+message CreateAccountReply {
+  bool was_created = 1;
+}
+
+message RequestGetAccountById {
+  string id = 1;
+}
+
+service HubService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserReply);
+  rpc GetAllUsers(google.protobuf.Empty) returns (stream User);
+  rpc GetByIdUser(RequestGetUserById) returns (User);
+
+  rpc CreateAccount(CreateAccountRequest) returns (CreateAccountReply);
+  rpc GetAllAccounts(google.protobuf.Empty) returns (stream Account);
+  rpc GetAccountById(RequestGetAccountById) returns (Account);
+}
